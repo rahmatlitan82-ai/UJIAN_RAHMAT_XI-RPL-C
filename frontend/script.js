@@ -356,31 +356,44 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     window.kembalikanPeminjaman = async function(id) {
-        if(confirm('Apakah Anda yakin ingin mengembalikannya?')) {
-            try {
-                const getResponse = await fetch(`http://localhost:3000/api/peminjaman/${id}`);
-                const data = await getResponse.json();
-                
+    if(confirm('Apakah Anda yakin alat ini sudah dikembalikan?')) {
+        try {
+            const getResponse = await fetch(`http://localhost:3000/api/peminjaman/${id}`);
+            const data = await getResponse.json();
+            
+            const tglPinjam = new Date(data.tanggal_pinjam);
+            const tglHariIni = new Date();
+            
+            tglPinjam.setHours(0, 0, 0, 0);
+            tglHariIni.setHours(0, 0, 0, 0);
+
+            const selisihWaktu = tglHariIni - tglPinjam;
+            const selisihHari = selisihWaktu / (1000 * 60 * 60 * 24);
+
+            if (selisihHari > 30) {
+                data.status = "Terlambat";
+            } else {
                 data.status = "Dikembalikan";
-                data.tanggal_kembali = new Date().toISOString().split('T')[0];
-
-                const response = await fetch(`http://localhost:3000/api/peminjaman/${id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    alert('Alat berhasil dikembalikan!');
-                    loadPeminjaman();
-                } else {
-                    alert('Gagal mengubah status pengembalian.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
             }
+            data.tanggal_kembali = new Date().toISOString().split('T')[0];
+
+            const response = await fetch(`http://localhost:3000/api/peminjaman/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert(`Alat berhasil dikembalikan dengan status: ${data.status}`);
+                loadPeminjaman();
+            } else {
+                alert('Gagal mengubah status pengembalian.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-    };
+    }
+};
 
     const modalEditPeminjaman = document.getElementById('modalEditPeminjaman');
     const formEditPeminjaman = document.getElementById('formEditPeminjaman');
