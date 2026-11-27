@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Kategori - Peminjaman Alat</title>
+    <link href="./src/output.css" rel="stylesheet">
+</head>
+<body class="h-screen flex flex-col overflow-hidden bg-gray-100">
+
+    <header class="bg-gradient-to-r from-slate-900 to-teal-900 px-6 py-5 flex-none z-20 shadow-md">
+        <div class="flex justify-between items-center w-full">
+            <div>
+                <h1 class="text-3xl font-bold text-yellow-200">Kategori</h1>
+                <p class="text-sm text-white">Selamat datang di aplikasi peminjaman alat!</p>
+            </div>
+            <button id="tombolMenu" onclick="toggleMenu()" class="md:hidden text-white text-3xl leading-none px-2 hover:text-amber-200" aria-label="Buka menu navigasi">
+                &#9776;
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <div id="sidebarLuar" onclick="toggleMenu()" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 md:hidden"></div>
+
+        <aside id="sidebarMenu" class="hidden md:block fixed md:static inset-0 z-40 w-64 flex-none h-full bg-white border-r-2 border-slate-900 shadow-xl overflow-y-auto">
+            <div class="flex items-center justify-between px-4 py-3 bg-slate-900 text-white font-bold md:hidden">
+                <span>MENU NAVIGASI</span>
+                <button onclick="toggleMenu()" class="text-2xl leading-none p-1">&times;</button>
+            </div>
+            <nav class="block">
+                <a href="dashboard.html" class="block px-4 py-3 border-b border-gray-300 hover:bg-blue-100">Dashboard</a>
+                <a href="kategori.html" class="block px-4 py-3 border-b border-gray-300 hover:bg-blue-100 bg-blue-50 text-blue-600 font-semibold">Data Kategori</a>
+                <a href="alat.html" class="block px-4 py-3 border-b border-gray-300 hover:bg-blue-100">Data Alat</a>
+                <a href="peminjaman.html" class="block px-4 py-3 border-b border-gray-300 hover:bg-blue-100">Peminjaman</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold">Data Kategori</h2>
+            </div>
+
+            <div class="bg-white border border-gray-300 rounded-lg p-3 sm:p-4 overflow-x-auto shadow-md">
+                <table class="w-full border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border p-2 text-center w-12">No</th>
+                            <th class="border p-2 text-left">Nama Kategori</th>
+                            <th class="border p-2 text-left">Deskripsi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kategori-list" class="divide-y divide-gray-100">
+                        <tr>
+                            <td colspan="3" class="py-4 px-6 text-center text-gray-500">Memuat data kategori...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
