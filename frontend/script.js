@@ -356,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     window.kembalikanPeminjaman = async function(id) {
-    if(confirm('Apakah Anda yakin alat ini sudah dikembalikan?')) {
+    if(confirm('Apakah Anda ingin mengembalikan alat ini?')) {
         try {
             const getResponse = await fetch(`http://localhost:3000/api/peminjaman/${id}`);
             const data = await getResponse.json();
@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const selisihWaktu = tglHariIni - tglPinjam;
             const selisihHari = selisihWaktu / (1000 * 60 * 60 * 24);
 
-            if (selisihHari > 30) {
+            if (selisihHari > 15) {
                 data.status = "Terlambat";
             } else {
                 data.status = "Dikembalikan";
